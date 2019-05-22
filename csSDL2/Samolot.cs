@@ -17,10 +17,10 @@ namespace csSDL2
 
       
         public double zycie;
-        public double vx,vy;
+        public double silnik,vy,vx;
         public double przyspieszenie;
         public double przyspieszenieWzlotowe;
-        public double maxv;
+        public double maxsilnik;
         public double maxkontup;
         public double masa;
         public double zwrotnosc;
@@ -43,9 +43,10 @@ namespace csSDL2
             zycie = 10;
             vy = 0;
             vx = 0;
+            silnik = 0;
             przyspieszenie = 0.1;
             przyspieszenieWzlotowe = 0.001;
-            maxv = 5;
+            maxsilnik = 5;
             maxkontup = 45;
             kont = 0;
             masa = 20;
@@ -62,7 +63,7 @@ namespace csSDL2
         {
             if(User32.IsKeyPushedDown(Keys.S))
             {
-                if(vx<maxv)vx += 0.11; 
+                if(silnik<maxsilnik)silnik += 0.11; 
             }
             if (User32.IsKeyPushedDown(Keys.Down))
             {
@@ -76,7 +77,7 @@ namespace csSDL2
             }
             if (User32.IsKeyPushedDown(Keys.ShiftKey))
             {
-                if(vx>0)vx -= 0.1;
+                if(silnik>0)silnik -= 0.1;
                
             }
 
@@ -84,16 +85,15 @@ namespace csSDL2
            
             if (kont > 360 || kont < -360) kont = 0;
 
-            if (vx < masa * 4)
+            if (silnik < masa * 4)
             {
-                if (kont <= 0 && kont >= -90) y += masa * 4 + -vx + (-0.04 * kont);
-                else if (kont < -90 && kont >= -180) y += masa * 4 + -vx + (0.04 * (kont + 180));
-                else if (kont <= 360 && kont >= 270) y += masa * 4 + -vx + ((-0.04) * (kont - 360));
-                else if (kont < 270 && kont >= 180) y += masa * 4 + -vx + (0.04 * (kont - 180));
-                else y += masa * 4 - vx;
+                if (kont <= 0 && kont >= -90) y += masa * 4 + -silnik + (-0.04 * kont);
+                else if (kont < -90 && kont >= -180) y += masa * 4 + -silnik + (0.04 * (kont + 180));
+                else if (kont <= 360 && kont >= 270) y += masa * 4 + -silnik + ((-0.04) * (kont - 360));
+                else if (kont < 270 && kont >= 180) y += masa * 4 + -silnik + (0.04 * (kont - 180));
+                else y += masa * 4 - silnik;
 
-                x += vx * Math.Cos(kont * Math.PI / 180);
-                y += vx * Math.Sin(kont * Math.PI / 180);
+                
             }
             else
             {
@@ -103,10 +103,13 @@ namespace csSDL2
                 else if (kont < 270 && kont >= 180) y += (0.04 * (kont - 180));
                
 
-                x += vx * Math.Cos(kont * Math.PI / 180);
-                y += vx * Math.Sin(kont * Math.PI / 180);
+               
             }
-            
+            vx = silnik * Math.Cos(kont * Math.PI / 180);
+            vy = silnik * Math.Sin(kont * Math.PI / 180);
+
+            x += vx;
+            y += vy;
 
         }
         public override void Wyswietlanie(CORE myCore)
@@ -136,7 +139,7 @@ namespace csSDL2
             if (User32.IsKeyPushedDown(Keys.Space)&&t_Strzal.flaga==true)
             {
                 
-                Pocisk a = new Pocisk(bron.pocisk.tekstura,x,y,10,10,(vx + bron.pocisk.shotspeed),kont,1);
+                Pocisk a = new Pocisk(bron.pocisk.tekstura,x,y,10,10,(silnik + bron.pocisk.shotspeed),kont,1);
                 wystrzelone.Add(a);
                 t_Strzal.Zakonczono();
 

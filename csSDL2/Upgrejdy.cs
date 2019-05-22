@@ -33,7 +33,7 @@ namespace csSDL2
             x = gracz.x;
             y = gracz.y;
             kont = gracz.kont;
-            vx = gracz.vx;
+            vx = gracz.silnik;
             core.DrawSpriteEx(tekstura, new SDL.SDL_Rect() { x = 0, y = 0, w = 128, h = 128 }, new SDL.SDL_Rect() { x = (int)x, y = (int)y, w = (int)w, h = (int)h }, kont, w, h);
         }
     }

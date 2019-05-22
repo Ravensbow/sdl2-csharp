@@ -40,6 +40,8 @@ namespace csSDL2
                 gracz.Wyswietlanie(myCore);
                 przeciwnik.Wyswietlanie(myCore);
                 sonda.Wyswietlanie(myCore);
+                sonda.Przesun(gracz);
+                przeciwnik.Przesun(gracz);
 
 
                 

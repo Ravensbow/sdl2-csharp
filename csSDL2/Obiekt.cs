@@ -14,7 +14,14 @@ namespace csSDL2
        
         public void Przesun(Samolot gracz)
         {
-            
+            if (gracz.y < 200&&gracz.vy<0)
+            {
+                y += -gracz.vy;
+            }
+            if (gracz.y > 520 && gracz.vy > 0)
+            {
+                y += -gracz.vy;
+            }
         }
 
         public virtual void Wyswietlanie(CORE core)
